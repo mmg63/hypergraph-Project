@@ -1,0 +1,39 @@
+###########################################################################
+##### must check the direction of data_root and result_root before run ####
+###########################################################################
+
+# data path
+data_type: citation             # 
+activate_dataset: cora          # dataset name in use
+data_root: &d_r data  # all data root path
+citation_root: !join [*d_r, gcn]  # dataset path
+standard_split: True            # use standard split or customized random split
+add_self_loop: True             # whether to add self-loop edge in Cora graph
+
+
+# model
+model: TransGCN_v2              # model name
+#HGNN
+k_sample: 128                   # for model with SampledGraphConvolution layer
+k_structured: 64                # for model with MixedNearestConvolution
+k_nearest: 64                   # for model with MixedNearestConvolution
+k_cluster: 64                   # for model with ClusterGraphConvolution layer
+clusters: 200                   # for model with ClusterGraphConvolution layer
+adjacent_centers: 2             # for model with ClusterGraphConvolution layer
+t_top: 8                        # for model with TopTGraphConvolution layer
+n_layers: 2
+layer_spec: [128]
+has_bias: True
+
+
+# train
+max_epoch: 2
+milestones: [200]
+gamma: 0.1
+lr: 0.01
+drop_out: 0.5
+print_freq: 1
+weight_decay: 0.0005
+decay_step: 200
+decay_rate: 0.7
+test_time: 12                     # activated only with sampled models
